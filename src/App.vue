@@ -5,6 +5,7 @@ const promptLabel = "root@kali:~$";
 const input = ref("");
 const inputRef = ref(null);
 const outputRef = ref(null);
+const guidedMode = ref(true);
 
 const profile = {
   name: "Sagar Dahal",
@@ -79,6 +80,16 @@ const blogs = [
 ];
 
 const history = reactive([]);
+const quickCommands = [
+  { label: "About", cmd: "whoami" },
+  { label: "Skills", cmd: "skills" },
+  { label: "Certs", cmd: "certs" },
+  { label: "Achievement", cmd: "achievements" },
+  { label: "Blogs", cmd: "blogs" },
+  { label: "Contact", cmd: "contact" },
+  { label: "Links", cmd: "links" },
+  { label: "Help", cmd: "help" }
+];
 
 const pushEntry = (entry) => history.push(entry);
 
@@ -191,6 +202,11 @@ const submit = () => {
   input.value = "";
 };
 
+const executeShortcut = (cmd) => {
+  runCommand(cmd);
+  inputRef.value?.focus();
+};
+
 watch(
   () => history.length,
   async () => {
@@ -211,12 +227,33 @@ onMounted(() => {
 <template>
   <div class="app" @click="inputRef?.focus()">
     <div class="stars"></div>
+    <div class="nebula"></div>
+    <div class="solar-system">
+      <span class="planet one"></span>
+      <span class="planet two"></span>
+      <span class="planet three"></span>
+    </div>
     <div class="terminal">
       <div class="terminal-head">
         <span class="dot red"></span>
         <span class="dot amber"></span>
         <span class="dot green"></span>
         <p>kali@terminal</p>
+        <button class="mode-btn" type="button" @click.stop="guidedMode = !guidedMode">
+          {{ guidedMode ? "Guided: ON" : "Guided: OFF" }}
+        </button>
+      </div>
+
+      <div v-if="guidedMode" class="quick-panel">
+        <button
+          v-for="item in quickCommands"
+          :key="item.cmd"
+          type="button"
+          class="quick-btn"
+          @click.stop="executeShortcut(item.cmd)"
+        >
+          {{ item.label }}
+        </button>
       </div>
 
       <div ref="outputRef" class="terminal-output">
@@ -251,6 +288,15 @@ onMounted(() => {
           placeholder="type a command..."
         />
       </form>
+      <div v-if="guidedMode" class="blog-shortcuts">
+        <button type="button" class="blog-btn" @click.stop="executeShortcut('blog 1')">Open Blog 1</button>
+        <button type="button" class="blog-btn" @click.stop="executeShortcut('blog 2')">Open Blog 2</button>
+        <button type="button" class="blog-btn" @click.stop="executeShortcut('blog 3')">Open Blog 3</button>
+        <a :href="social.github" target="_blank" rel="noreferrer">GitHub</a>
+        <a :href="social.linkedin" target="_blank" rel="noreferrer">LinkedIn</a>
+        <a :href="social.medium" target="_blank" rel="noreferrer">Medium</a>
+        <a :href="profile.resume" target="_blank" rel="noreferrer">Resume</a>
+      </div>
     </div>
   </div>
 </template>

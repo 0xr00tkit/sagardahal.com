@@ -238,7 +238,7 @@ onMounted(() => {
         <span class="dot red"></span>
         <span class="dot amber"></span>
         <span class="dot green"></span>
-        <p>kali@terminal</p>
+        <p>root@kali</p>
         <button class="mode-btn" type="button" @click.stop="guidedMode = !guidedMode">
           {{ guidedMode ? "Guided: ON" : "Guided: OFF" }}
         </button>

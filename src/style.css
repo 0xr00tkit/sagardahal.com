@@ -126,7 +126,7 @@ a:hover {
 .terminal {
   position: relative;
   z-index: 2;
-  max-width: 1180px;
+  max-width: 1280px;
   margin: 0 auto;
   border: 1px solid var(--terminal-edge);
   border-radius: 10px;

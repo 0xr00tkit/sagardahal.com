@@ -116,7 +116,7 @@ const commands = {
   },
   banner: () => {
     printLines([
-      "Sagar Dahal Terminal Portfolio",
+      "Sagar Dahal Portfolio",
       "Type 'help' to view commands."
     ], "system");
   },

@@ -28,7 +28,7 @@ function processDirectory(directory) {
         content = content.replace(/'\/_next/g, `'${relativePrefix}next`);
         
         // 2. Replace absolute references to other static assets with dynamic relative paths
-        const assets = ['favicon.ico', 'globe.svg', 'file.svg', 'window.svg', 'next.svg', 'vercel.svg', 'SagarDahal_Resume.pdf'];
+        const assets = ['favicon.ico', 'globe.svg', 'file.svg', 'window.svg', 'next.svg', 'vercel.svg', 'SagarDahalResume.pdf'];
         assets.forEach(asset => {
           const regex = new RegExp(`"\\/${asset.replace('.', '\\.')}`, 'g');
           content = content.replace(regex, `"${relativePrefix}${asset}`);

@@ -43,7 +43,7 @@ export default function Home() {
     location: "Bongaigaon, Assam, India",
     email: "thesagardahal00@gmail.com",
     phone: "+91-8779367858",
-    resume: "SagarDahal_Resume.pdf"
+    resume: "SagarDahalResume.pdf"
   };
 
   const socials = {

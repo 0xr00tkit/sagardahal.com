@@ -268,6 +268,7 @@ export default function Home() {
         addToHistory({ kind: "output", text: "  scan         Diagnose system port status" });
         addToHistory({ kind: "output", text: "  decrypt <c>  Decode standard ROT13 cipher string" });
         addToHistory({ kind: "output", text: "  links        Professional network connections" });
+        addToHistory({ kind: "output", text: "  resume       Download & view professional resume" });
         addToHistory({ kind: "output", text: "  clear        Flush terminal history buffer" });
         break;
 
@@ -359,6 +360,12 @@ export default function Home() {
         addToHistory({ kind: "link", text: "GitHub:   ", label: "0xr00tkit", url: socials.github });
         addToHistory({ kind: "link", text: "LinkedIn: ", label: "Sagar Dahal", url: socials.linkedin });
         addToHistory({ kind: "link", text: "Medium:   ", label: "@thesagardahal", url: socials.medium });
+        addToHistory({ kind: "link", text: "Resume:   ", label: "SagarDahalResume.pdf", url: researcherInfo.resume });
+        break;
+
+      case "resume":
+        addToHistory({ kind: "section", text: "[PROFESSIONAL RESUME]" });
+        addToHistory({ kind: "link", text: "Resume:   ", label: "SagarDahalResume.pdf", url: researcherInfo.resume });
         break;
 
       case "clear":
@@ -645,6 +652,7 @@ export default function Home() {
             <button className="quick-cmd-btn" onClick={() => processCLICommand("logs")}>bulletins</button>
             <button className="quick-cmd-btn" onClick={() => processCLICommand("scan")}>diagnose ports</button>
             <button className="quick-cmd-btn" onClick={() => processCLICommand("links")}>links</button>
+            <button className="quick-cmd-btn" onClick={() => processCLICommand("resume")}>resume</button>
             <button className="quick-cmd-btn" onClick={() => processCLICommand("clear")}>clear console</button>
           </div>
 

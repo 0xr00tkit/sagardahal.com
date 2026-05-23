@@ -232,6 +232,7 @@ function initEventDelegation() {
         appendTerminalLine('output', '  scan         Diagnose system port status');
         appendTerminalLine('output', '  decrypt <c>  Decode standard ROT13 cipher string');
         appendTerminalLine('output', '  links        Professional network connections');
+        appendTerminalLine('output', '  resume       Download & view professional resume');
         appendTerminalLine('output', '  clear        Flush terminal history buffer');
         break;
         
@@ -346,6 +347,12 @@ function initEventDelegation() {
         appendTerminalLine('link', 'GitHub:   ', true, '0xr00tkit', 'https://github.com/0xr00tkit');
         appendTerminalLine('link', 'LinkedIn: ', true, 'Sagar Dahal', 'https://in.linkedin.com/in/sagar-dahal-b16021203');
         appendTerminalLine('link', 'Medium:   ', true, '@thesagardahal', 'https://thesagardahal.medium.com/');
+        appendTerminalLine('link', 'Resume:   ', true, 'SagarDahalResume.pdf', 'SagarDahalResume.pdf');
+        break;
+        
+      case 'resume':
+        appendTerminalLine('section', '[PROFESSIONAL RESUME]');
+        appendTerminalLine('link', 'Resume:   ', true, 'SagarDahalResume.pdf', 'SagarDahalResume.pdf');
         break;
         
       case 'clear':
@@ -427,6 +434,7 @@ function initEventDelegation() {
       else if (text.includes('diag') || text.includes('scan')) cmd = 'scan';
       else if (text.includes('disclos') || text.includes('achieve')) cmd = 'disclosure';
       else if (text.includes('link')) cmd = 'links';
+      else if (text.includes('resume')) cmd = 'resume';
       else if (text.includes('clear')) cmd = 'clear';
       
       executeCommand(cmd);

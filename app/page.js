@@ -2,29 +2,29 @@
 
 import React, { useState, useEffect, useRef } from "react";
 
-// Inline Custom SVGs for premium, clean cybersecurity icons (Zero external dependencies)
+// Inline Custom SVGs for executive, minimalist cybersecurity icons
 const SVGShield = () => (
-  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="cyber-icon">
+  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
     <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
   </svg>
 );
 
 const SVGTerminal = () => (
-  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="cyber-icon">
+  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
     <polyline points="4 17 10 11 4 5"/>
     <line x1="12" y1="19" x2="20" y2="19"/>
   </svg>
 );
 
 const SVGUser = () => (
-  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="cyber-icon">
+  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
     <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
     <circle cx="12" cy="7" r="4"/>
   </svg>
 );
 
 const SVGUnlock = () => (
-  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="cyber-icon">
+  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
     <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
     <path d="M7 11V7a5 5 0 0 1 9.9-1"/>
   </svg>
@@ -123,10 +123,11 @@ export default function Home() {
     }
   ];
 
-  // Live Decrypter minigame State
+  // Live Decrypter State & Scramble Isolation
   const [cryptString, setCryptString] = useState("gurfntneqnuny00@tznvy.pbz");
   const [decryptedResult, setDecryptedResult] = useState("");
-  const [cryptAnimationText, setCryptAnimationText] = useState("gurfntneqnuny00@tznvy.pbz");
+  const [emailScrambleText, setEmailScrambleText] = useState("thesagardahal00@gmail.com");
+  const [phoneScrambleText, setPhoneScrambleText] = useState("+91-8779367858");
   const [scrambleActive, setScrambleActive] = useState(false);
   const [revealedContacts, setRevealedContacts] = useState(false);
   const [sandboxScrambleActive, setSandboxScrambleActive] = useState(false);
@@ -174,16 +175,18 @@ export default function Home() {
     }, 30);
   };
 
+  // Fixed: Concurrent Matrix Scramble for BOTH Email & Phone Numbers
   const triggerRevealAnimation = () => {
     if (scrambleActive || revealedContacts) return;
     setScrambleActive(true);
 
     let count = 0;
     const targetEmail = researcherInfo.email;
+    const targetPhone = researcherInfo.phone;
     const scrambledChars = "!@#$%^&*()_+{}[]|;:<>?,./10";
     
     const interval = setInterval(() => {
-      setCryptAnimationText(
+      setEmailScrambleText(
         targetEmail
           .split("")
           .map((char, index) => {
@@ -193,11 +196,24 @@ export default function Home() {
           })
           .join("")
       );
+
+      setPhoneScrambleText(
+        targetPhone
+          .split("")
+          .map((char, index) => {
+            if (index < count) return char;
+            if (char === "+" || char === "-") return char;
+            return scrambledChars[Math.floor(Math.random() * scrambledChars.length)];
+          })
+          .join("")
+      );
       
       count += 2;
-      if (count >= targetEmail.length + 5) {
+      const maxLen = Math.max(targetEmail.length, targetPhone.length);
+      if (count >= maxLen + 5) {
         clearInterval(interval);
-        setCryptAnimationText(targetEmail);
+        setEmailScrambleText(targetEmail);
+        setPhoneScrambleText(targetPhone);
         setRevealedContacts(true);
         setScrambleActive(false);
       }
@@ -213,12 +229,10 @@ export default function Home() {
   const terminalScreenRef = useRef(null);
   const cliInputRef = useRef(null);
 
-  // Focus terminal
   const focusCLI = () => {
     if (cliInputRef.current) cliInputRef.current.focus();
   };
 
-  // Auto scroll terminal to bottom
   useEffect(() => {
     if (terminalScreenRef.current) {
       terminalScreenRef.current.scrollTop = terminalScreenRef.current.scrollHeight;
@@ -236,7 +250,7 @@ export default function Home() {
         )}:${pad(now.getMinutes())}:${pad(now.getSeconds())}`
       );
     };
-    updateClock(); // run initially
+    updateClock();
     const timer = setInterval(updateClock, 1000);
     return () => clearInterval(timer);
   }, []);
@@ -389,7 +403,6 @@ export default function Home() {
 
   const triggerQuickTerminalCommand = (cmdText) => {
     setActiveTab("terminal");
-    // Brief timeout to ensure the tab is rendered before command logs
     setTimeout(() => {
       processCLICommand(cmdText);
       focusCLI();
@@ -398,11 +411,11 @@ export default function Home() {
 
   return (
     <main className="main-wrapper">
-      {/* Background soft modern layout textures (No Cyborg canvas rain, no scanlines, very clean) */}
-      <div className="cyber-grid" />
-      <div className="bg-gradient-glow" />
+      {/* Subtle Ambient Layer Mesh Backgrounds */}
+      <div className="bg-ambient-mesh" />
+      <div className="bg-dot-grid" />
 
-      {/* Modern High-End Tech Header */}
+      {/* Executive Minimalist Glassmorphic Header */}
       <header className="main-header">
         <div className="brand-section">
           <h1 className="brand-title">SAGAR DAHAL</h1>
@@ -413,7 +426,7 @@ export default function Home() {
             <span className="status-indicator blink" />
             <span>DECK: ACTIVE</span>
           </div>
-          <div className="status-node secure-channel">
+          <div className="status-node">
             <span>SECURE CHANNEL: E2EE</span>
           </div>
           <div className="status-node clock-ticker">
@@ -422,15 +435,17 @@ export default function Home() {
         </div>
       </header>
 
-      {/* Professional Disclosure Highlight */}
+      {/* Security Mitigation Archive Highlight */}
       <section className="alert-banner">
-        <div className="alert-icon">[!]</div>
+        <div className="alert-icon">
+          <SVGShield />
+        </div>
         <div className="alert-message">
           <strong>SECURITY MITIGATION ARCHIVE:</strong> In 2023, Sagar responsibly disclosed a critical API logic vulnerability in <strong>Moneycontrol</strong> exposing personal credentials. Collaborated with technical staff to enforce immediate remediation.
         </div>
       </section>
 
-      {/* Decent, Clean Navigation Tabs */}
+      {/* Capsule Segmented Tab Navigation */}
       <nav className="tab-navigation">
         <button
           onClick={() => setActiveTab("dashboard")}
@@ -473,15 +488,16 @@ export default function Home() {
         </button>
       </nav>
 
-      {/* Interactive Quick Panel Helpers */}
+      {/* Interactive Quick Diagnostics Shortcuts */}
       <section className={`cyber-panel quick-panel ${guideMode ? "" : "hidden-tab"}`}>
-        <span className="quick-panel-title">Quick Diagnostic Shortcuts:</span>
+        <span className="quick-panel-title">Quick Shortcuts:</span>
         <div className="quick-panel-buttons">
           <button className="quick-cmd-btn" onClick={() => triggerQuickTerminalCommand("whoami")}>whoami</button>
           <button className="quick-cmd-btn" onClick={() => triggerQuickTerminalCommand("skills")}>skills</button>
           <button className="quick-cmd-btn" onClick={() => triggerQuickTerminalCommand("certs")}>clearance certs</button>
           <button className="quick-cmd-btn" onClick={() => triggerQuickTerminalCommand("logs")}>advisory bulletins</button>
           <button className="quick-cmd-btn" onClick={() => triggerQuickTerminalCommand("scan")}>port diagnostics</button>
+          <button className="quick-cmd-btn" onClick={() => triggerQuickTerminalCommand("resume")}>resume</button>
         </div>
       </section>
 
@@ -491,9 +507,9 @@ export default function Home() {
           {/* Column 1: Bios & Clearances */}
           <div className="profile-card">
             <div className="cyber-panel">
-              <h2 className="panel-title green-title">Consultant Profile</h2>
+              <h2 className="panel-title">Consultant Profile</h2>
               
-              <div className="cyber-badge-container" style={{ marginBottom: "15px" }}>
+              <div className="cyber-badge-container">
                 <span className="badge crtp">CRTP</span>
                 <span className="badge cyber-generic">Red Teaming</span>
                 <span className="badge cyber-generic">Penetration Testing</span>
@@ -509,14 +525,14 @@ export default function Home() {
               </div>
               <div className="bio-detail-row">
                 <span className="bio-label">Secure Contact</span>
-                <span className={`bio-value secure-val ${revealedContacts ? "revealed" : "encrypted"}`}>
-                  {revealedContacts ? researcherInfo.email : "[ENCRYPTED - DECRYPT BELOW]"}
+                <span data-contact="email" className={`bio-value secure-val ${revealedContacts ? "revealed" : "encrypted"}`}>
+                  {revealedContacts ? researcherInfo.email : (scrambleActive ? emailScrambleText : "[ENCRYPTED - DECRYPT BELOW]")}
                 </span>
               </div>
               <div className="bio-detail-row">
                 <span className="bio-label">Primary VoIP Node</span>
-                <span className={`bio-value secure-val ${revealedContacts ? "revealed" : "encrypted"}`}>
-                  {revealedContacts ? researcherInfo.phone : "[ENCRYPTED - DECRYPT BELOW]"}
+                <span data-contact="phone" className={`bio-value secure-val ${revealedContacts ? "revealed" : "encrypted"}`}>
+                  {revealedContacts ? researcherInfo.phone : (scrambleActive ? phoneScrambleText : "[ENCRYPTED - DECRYPT BELOW]")}
                 </span>
               </div>
 
@@ -524,14 +540,14 @@ export default function Home() {
                 <button
                   onClick={() => triggerRevealAnimation()}
                   className={`crypt-btn ready-decrypt`}
-                  style={{ marginTop: "15px" }}
+                  style={{ marginTop: "16px" }}
                 >
                   {scrambleActive ? "DECRYPTING PROFILE..." : "REVEAL SECURE CONTACTS"}
                 </button>
               )}
 
               {revealedContacts && (
-                <div style={{ marginTop: "15px", fontSize: "0.8rem", color: "var(--glow-green)", textAlign: "center", border: "1px solid var(--glow-green)", borderRadius: "4px", padding: "8px", background: "rgba(0, 255, 102, 0.04)" }}>
+                <div style={{ marginTop: "16px", fontSize: "0.82rem", color: "var(--accent-emerald)", textAlign: "center", border: "1px solid rgba(52, 211, 153, 0.3)", borderRadius: "8px", padding: "10px", background: "rgba(52, 211, 153, 0.05)", fontWeight: "600" }}>
                   [✓] PROFILE CHANNELS REVEALED SECURELY
                 </div>
               )}
@@ -539,7 +555,7 @@ export default function Home() {
 
             {/* Certifications badges */}
             <div className="cyber-panel blue">
-              <h2 className="panel-title cyan-title">Professional Certifications</h2>
+              <h2 className="panel-title">Verified Certifications</h2>
               <div className="cert-grid">
                 {certs.map((c, i) => (
                   <div key={i} className="cert-card">
@@ -551,9 +567,9 @@ export default function Home() {
             </div>
           </div>
 
-          {/* Column 2: Capabilities (Skills) */}
+          {/* Column 2: Technical Capabilities (Skills) */}
           <div className="cyber-panel">
-            <h2 className="panel-title green-title">Technical Expertise Assessments</h2>
+            <h2 className="panel-title">Technical Expertise Assessments</h2>
             
             <div className="skills-container">
               <div>
@@ -609,7 +625,7 @@ export default function Home() {
       <div id="tab-logs" className={`tab-content-section ${activeTab === "logs" ? "" : "hidden-tab"}`}>
         <div className="writeups-wrapper">
           {writeups.map((w, idx) => (
-            <article key={idx} className={`cyber-panel ${w.severity === "High" ? "amber advisory-card red" : "advisory-card"}`}>
+            <article key={idx} className={`cyber-panel ${w.severity === "High" ? "advisory-card red" : "advisory-card"}`}>
               <div className="advisory-header">
                 <span className="advisory-id">{w.id} [SEVERITY: {w.severity.toUpperCase()}]</span>
                 <span className="advisory-date">PUBLISHED: {w.date}</span>
@@ -640,10 +656,9 @@ export default function Home() {
               <span className="dot green" />
             </div>
             <span className="terminal-title">diagnostics@sagardahal: ~/operations</span>
-            <span style={{ fontSize: "0.7rem", color: "var(--glow-blue)", fontWeight: "bold" }}>CONSOLE READY</span>
+            <span style={{ fontSize: "0.72rem", color: "var(--accent-cyan)", fontWeight: "bold", fontFamily: "var(--font-mono)" }}>CONSOLE READY</span>
           </div>
 
-          {/* Quick presets inside terminal container */}
           <div className="terminal-quick-links">
             <button className="quick-cmd-btn" onClick={() => processCLICommand("whoami")}>whoami</button>
             <button className="quick-cmd-btn" onClick={() => processCLICommand("skills")}>skills</button>
@@ -665,12 +680,10 @@ export default function Home() {
                 {line.kind === "link" ? (
                   <>
                     <span>  {line.text} </span>
-                    <a href={line.url} target="_blank" rel="noopener noreferrer" style={{ color: "var(--glow-cyan)", textDecoration: "underline" }}>
+                    <a href={line.url} target="_blank" rel="noopener noreferrer" style={{ color: "var(--accent-cyan)", textDecoration: "underline" }}>
                       {line.label}
                     </a>
                   </>
-                ) : line.kind === "section" ? (
-                  <span>{line.text}</span>
                 ) : (
                   <span>{line.text}</span>
                 )}
@@ -695,20 +708,19 @@ export default function Home() {
         </div>
       </div>
 
-      {/* Tab Area 4: Decryption Chamber */}
+      {/* Tab Area 4: Decryption Sandbox */}
       <div id="tab-decrypt" className={`tab-content-section ${activeTab === "decrypt" ? "" : "hidden-tab"}`}>
         <div className="crypt-wrapper">
-          {/* Column 1: ROT13 Decrypter minigame */}
           <div className="cyber-panel">
-            <h2 className="panel-title green-title">
+            <h2 className="panel-title">
               Cipher Decryption Sandbox
             </h2>
-            <p style={{ fontSize: "0.85rem", color: "var(--text-muted)", marginBottom: "15px", lineHeight: "1.5" }}>
+            <p style={{ fontSize: "0.85rem", color: "var(--text-sub)", marginBottom: "16px", lineHeight: "1.5" }}>
               Standard operations audit files often present obfuscated values. This decrypt sandbox operates a real-time ROT-13 decryption loop. Provide cryptographic strings below to decode values immediately.
             </p>
 
-            <div className="crypt-display" style={{ marginBottom: "15px" }}>
-              <span style={{ fontSize: "0.75rem", color: "var(--text-muted)", textTransform: "uppercase", fontWeight: "bold" }}>DECODING ACTIVE PREVIEW</span>
+            <div className="crypt-display" style={{ marginBottom: "16px" }}>
+              <span style={{ fontSize: "0.74rem", color: "var(--text-muted)", textTransform: "uppercase", fontWeight: "700" }}>DECODING ACTIVE PREVIEW</span>
               <div className="cipher-visual">
                 <span className="cipher-scrambler">
                   {sandboxScrambleActive ? sandboxAnimationText : (decryptedResult || cryptString || "gurfntneqnuny00@tznvy.pbz")}
@@ -733,8 +745,8 @@ export default function Home() {
             </form>
 
             <div className="cipher-hints" style={{ marginTop: "20px" }}>
-              <span style={{ fontSize: "0.8rem", fontWeight: "700", color: "#ffffff" }}>OBJECTIVE / HINT</span>
-              <p style={{ fontSize: "0.8rem", lineHeight: "1.4" }}>
+              <span style={{ fontSize: "0.82rem", fontWeight: "700", color: "#ffffff" }}>OBJECTIVE / HINT</span>
+              <p style={{ fontSize: "0.82rem", lineHeight: "1.4" }}>
                 Decrypt Sagar Dahal's secure credentials obfuscation. You can use the decryption inputs:
               </p>
               <span className="hint-bullet">Contact Cipher: <strong>gurfntneqnuny00@tznvy.pbz</strong></span>
@@ -742,9 +754,8 @@ export default function Home() {
             </div>
           </div>
 
-          {/* Column 2: Secure messaging form */}
           <div className="cyber-panel blue">
-            <h2 className="panel-title cyan-title">
+            <h2 className="panel-title">
               Secure Channel Transmission
             </h2>
             
@@ -769,14 +780,14 @@ export default function Home() {
         </div>
       </div>
 
-      {/* Premium Footer */}
+      {/* Executive Footer */}
       <footer className="cyber-footer">
         <p>© 2026 SAGAR DAHAL. INFORMATION SECURITY AUDITING CONSOLE. ALL RIGHTS RESERVED.</p>
-        <div style={{ marginTop: "12px", display: "flex", justifyContent: "center", gap: "20px" }}>
-          <a href={socials.github} target="_blank" rel="noopener noreferrer" style={{ color: "var(--text-muted)", textDecoration: "none" }}>[GITHUB]</a>
-          <a href={socials.linkedin} target="_blank" rel="noopener noreferrer" style={{ color: "var(--text-muted)", textDecoration: "none" }}>[LINKEDIN]</a>
-          <a href={socials.medium} target="_blank" rel="noopener noreferrer" style={{ color: "var(--text-muted)", textDecoration: "none" }}>[MEDIUM]</a>
-          <a href={researcherInfo.resume} target="_blank" rel="noopener noreferrer" style={{ color: "var(--text-muted)", textDecoration: "none" }}>[RESUME]</a>
+        <div style={{ marginTop: "12px", display: "flex", justifyContent: "center", gap: "20px", flexWrap: "wrap" }}>
+          <a href={socials.github} target="_blank" rel="noopener noreferrer">[GITHUB]</a>
+          <a href={socials.linkedin} target="_blank" rel="noopener noreferrer">[LINKEDIN]</a>
+          <a href={socials.medium} target="_blank" rel="noopener noreferrer">[MEDIUM]</a>
+          <a href={researcherInfo.resume} target="_blank" rel="noopener noreferrer">[RESUME]</a>
         </div>
       </footer>
     </main>

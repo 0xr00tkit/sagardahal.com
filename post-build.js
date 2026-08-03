@@ -90,7 +90,8 @@ function initEventDelegation() {
     
     const interval = setInterval(() => {
       secureVals.forEach(node => {
-        const isEmail = node.textContent.includes('@') || 
+        const isEmail = node.getAttribute('data-contact') === 'email' ||
+                        node.textContent.includes('@') || 
                         (node.previousElementSibling && node.previousElementSibling.textContent.toLowerCase().includes('contact')) || 
                         (node.previousElementSibling && node.previousElementSibling.textContent.toLowerCase().includes('transmission'));
         const targetText = isEmail ? targetEmail : targetPhone;
@@ -98,17 +99,18 @@ function initEventDelegation() {
           .split("")
           .map((char, index) => {
             if (index < count) return char;
-            if (char === "@" || char === ".") return char;
+            if (char === "@" || char === "." || char === "+" || char === "-") return char;
             return scrambledChars[Math.floor(Math.random() * scrambledChars.length)];
           })
           .join("");
       });
       
       count += 2;
-      if (count >= targetEmail.length + 5) {
+      if (count >= Math.max(targetEmail.length, targetPhone.length) + 5) {
         clearInterval(interval);
         secureVals.forEach(node => {
-          const isEmail = node.textContent.includes('@') || 
+          const isEmail = node.getAttribute('data-contact') === 'email' ||
+                          node.textContent.includes('@') || 
                           (node.previousElementSibling && node.previousElementSibling.textContent.toLowerCase().includes('contact')) || 
                           (node.previousElementSibling && node.previousElementSibling.textContent.toLowerCase().includes('transmission'));
           node.textContent = isEmail ? targetEmail : targetPhone;
@@ -121,14 +123,15 @@ function initEventDelegation() {
         
         const container = revealBtn.parentElement;
         const statusNode = document.createElement('div');
-        statusNode.style.marginTop = '15px';
-        statusNode.style.fontSize = '0.8rem';
-        statusNode.style.color = 'var(--glow-green)';
+        statusNode.style.marginTop = '16px';
+        statusNode.style.fontSize = '0.82rem';
+        statusNode.style.color = 'var(--accent-emerald)';
         statusNode.style.textAlign = 'center';
-        statusNode.style.border = '1px solid var(--glow-green)';
-        statusNode.style.borderRadius = '4px';
-        statusNode.style.padding = '8px';
-        statusNode.style.background = 'rgba(16, 185, 129, 0.04)';
+        statusNode.style.border = '1px solid rgba(52, 211, 153, 0.3)';
+        statusNode.style.borderRadius = '8px';
+        statusNode.style.padding = '10px';
+        statusNode.style.background = 'rgba(52, 211, 153, 0.05)';
+        statusNode.style.fontWeight = '600';
         statusNode.textContent = '[✓] PROFILE CHANNELS REVEALED SECURELY';
         container.appendChild(statusNode);
       }

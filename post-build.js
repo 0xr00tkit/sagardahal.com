@@ -528,6 +528,10 @@ if (fs.existsSync(outDir)) {
     console.log('[post-build] Successfully renamed _next folder to next.');
   }
   
+  // Create .nojekyll file to prevent GitHub Pages from ignoring static assets
+  fs.writeFileSync(path.join(outDir, '.nojekyll'), '');
+  console.log('[post-build] Created .nojekyll file.');
+  
   console.log('[post-build] Path conversion completed successfully.');
 } else {
   console.error('[post-build] Error: out/ directory does not exist.');

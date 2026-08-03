@@ -90,10 +90,8 @@ function initEventDelegation() {
     
     const interval = setInterval(() => {
       secureVals.forEach(node => {
-        const isEmail = node.getAttribute('data-contact') === 'email' ||
-                        node.textContent.includes('@') || 
-                        (node.previousElementSibling && node.previousElementSibling.textContent.toLowerCase().includes('contact')) || 
-                        (node.previousElementSibling && node.previousElementSibling.textContent.toLowerCase().includes('transmission'));
+        const attr = node.getAttribute('data-contact');
+        const isEmail = attr ? (attr === 'email') : (node.textContent.includes('@') || (node.previousElementSibling && node.previousElementSibling.textContent.toLowerCase().includes('secure contact')));
         const targetText = isEmail ? targetEmail : targetPhone;
         node.textContent = targetText
           .split("")
@@ -109,10 +107,8 @@ function initEventDelegation() {
       if (count >= Math.max(targetEmail.length, targetPhone.length) + 5) {
         clearInterval(interval);
         secureVals.forEach(node => {
-          const isEmail = node.getAttribute('data-contact') === 'email' ||
-                          node.textContent.includes('@') || 
-                          (node.previousElementSibling && node.previousElementSibling.textContent.toLowerCase().includes('contact')) || 
-                          (node.previousElementSibling && node.previousElementSibling.textContent.toLowerCase().includes('transmission'));
+          const attr = node.getAttribute('data-contact');
+          const isEmail = attr ? (attr === 'email') : (node.textContent.includes('@') || (node.previousElementSibling && node.previousElementSibling.textContent.toLowerCase().includes('secure contact')));
           node.textContent = isEmail ? targetEmail : targetPhone;
           node.classList.remove('encrypted');
           node.classList.add('revealed');

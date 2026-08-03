@@ -1,8 +1,18 @@
 "use client";
 
 import React, { useState, useEffect, useRef } from "react";
+import Link from "next/link";
+import {
+  getStoredData,
+  INITIAL_WRITEUPS,
+  INITIAL_RESEARCHER_INFO,
+  INITIAL_SKILLS,
+  INITIAL_CERTS,
+  INITIAL_SOCIALS,
+  INITIAL_ACHIEVEMENTS
+} from "./lib/data";
 
-// Inline Custom SVGs for executive, minimalist cybersecurity icons
+// Inline Custom SVGs for minimalist icons
 const SVGShield = () => (
   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
     <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
@@ -35,103 +45,32 @@ export default function Home() {
   const [guideMode, setGuideMode] = useState(true);
   const [clock, setClock] = useState("2026-05-23 14:26:00");
 
-  // Portfolio Data
-  const researcherInfo = {
-    name: "Sagar Dahal",
-    role: "Information Security Consultant",
-    summary: "Offensive security professional with 3+ years of experience in penetration testing, red teaming, active directory audits, and vulnerability assessment.",
-    location: "Bongaigaon, Assam, India",
-    email: "thesagardahal00@gmail.com",
-    phone: "+91-8779367858",
-    resume: "SagarDahalResume.pdf"
-  };
+  // Dynamic Portfolio Data with localStorage sync
+  const [researcherInfo, setResearcherInfo] = useState(INITIAL_RESEARCHER_INFO);
+  const [socials] = useState(INITIAL_SOCIALS);
+  const [certs, setCerts] = useState(INITIAL_CERTS);
+  const [skills, setSkills] = useState(INITIAL_SKILLS);
+  const [achievements] = useState(INITIAL_ACHIEVEMENTS);
+  const [writeups, setWriteups] = useState(INITIAL_WRITEUPS);
 
-  const socials = {
-    github: "https://github.com/0xr00tkit",
-    linkedin: "https://in.linkedin.com/in/sagar-dahal-b16021203",
-    medium: "https://thesagardahal.medium.com/"
-  };
+  useEffect(() => {
+    setResearcherInfo(getStoredData("portfolio_info", INITIAL_RESEARCHER_INFO));
+    setSkills(getStoredData("portfolio_skills", INITIAL_SKILLS));
+    setCerts(getStoredData("portfolio_certs", INITIAL_CERTS));
+    setWriteups(getStoredData("portfolio_writeups", INITIAL_WRITEUPS));
+  }, []);
 
-  const certs = [
-    { code: "CRTP", name: "Certified Red Team Professional" },
-    { code: "CNSP", name: "Certified Network Security Practitioner" },
-    { code: "CAP", name: "Certified Authorization Professional" },
-    { code: "MCRTA", name: "Modern Certified Red Team Analyst" },
-    { code: "CRTA", name: "Certified Red Team Analyst" }
-  ];
-
-  const skills = [
-    { name: "Web / API Penetration Testing", level: 90, cat: "Pentest" },
-    { name: "Active Directory Attacks & Audits", level: 85, cat: "Pentest" },
-    { name: "Network Infrastructure Security", level: 80, cat: "Pentest" },
-    { name: "Security Code Auditing", level: 75, cat: "Coding" },
-    { name: "Python / Rust Development", level: 80, cat: "Coding" },
-    { name: "Linux / Windows Systems Management", level: 85, cat: "Systems" },
-    { name: "OSINT & Social Engineering", level: 75, cat: "Methods" },
-    { name: "Risk Assessment & Red Team Ops", level: 80, cat: "Methods" }
-  ];
-
-  const achievements = [
-    {
-      title: "Moneycontrol Vulnerability Disclosure (2023)",
-      desc: "Successfully identified and responsibly disclosed a critical API logic flaw exposing personal user details. Advised engineering lead on mitigation strategy, resulting in immediate remediation."
-    }
-  ];
-
-  const writeups = [
-    {
-      id: "ADV-2025-01",
-      slug: "entropy",
-      title: "Understanding Shannon Entropy: Measuring Randomness for Secure Code Auditing",
-      date: "September 2025",
-      sourceUrl: "https://thesagardahal.medium.com/",
-      content: [
-        "Introduces practical applications of Shannon Entropy calculation algorithms during security reviews.",
-        "Helps identify weak logic structures in JWT generations, CSRF tokens, session IDs, reset URL parameters, and API keys.",
-        "Low-entropy token structures lead to predictable identifiers which attackers can harvest and brute-force.",
-        "Outlines a security framework for auditing entropy indices inside authentication microservices."
-      ],
-      severity: "Medium"
-    },
-    {
-      id: "ADV-2201-02",
-      slug: "toolbox",
-      title: "Hack The Box Walkthrough: 'Toolbox' Escalation Vector",
-      date: "April 2021",
-      sourceUrl: "https://thesagardahal.medium.com/hack-the-box-toolbox-cef0af5703df",
-      content: [
-        "Covers complete active scanning phase up to initial shell and kernel-level root privilege escalation.",
-        "Identified misconfigured FTP directories exposing Docker compose parameters and local credential storage.",
-        "Leveraged structured SQL injection parameters inside PostgreSQL to achieve remote command execution (RCE).",
-        "Conducted docker-escape pivot audit to exploit local group permissions on host controller."
-      ],
-      severity: "High"
-    },
-    {
-      id: "ADV-2201-03",
-      slug: "email-bypass",
-      title: "Bypassing Email Verification Controls - Hack The Box Logical Walkthrough",
-      date: "February 2021",
-      sourceUrl: "https://thesagardahal.medium.com/thesagardahal-bypassing-email-verification-hack-the-box-6af9b3387790",
-      content: [
-        "Analyzes client-side state assumptions where server trust boundaries rely heavily on frontend controllers.",
-        "Bypassed validation checks inside signup flows by manipulating HTTP state flags during initial registration.",
-        "Provides exact proof-of-concept testing logic to isolate race conditions on authentication endpoints.",
-        "Recommends absolute enforcement matrices requiring server-side token expiration validations on all privileged methods."
-      ],
-      severity: "High"
-    }
-  ];
-
-  // Live Decrypter State & Scramble Isolation
+  // Decrypter sandbox states
   const [cryptString, setCryptString] = useState("gurfntneqnuny00@tznvy.pbz");
   const [decryptedResult, setDecryptedResult] = useState("");
+  const [sandboxScrambleActive, setSandboxScrambleActive] = useState(false);
+  const [sandboxAnimationText, setSandboxAnimationText] = useState("gurfntneqnuny00@tznvy.pbz");
+
+  // Contact decoder states
   const [emailScrambleText, setEmailScrambleText] = useState("thesagardahal00@gmail.com");
   const [phoneScrambleText, setPhoneScrambleText] = useState("+91-8779367858");
   const [scrambleActive, setScrambleActive] = useState(false);
   const [revealedContacts, setRevealedContacts] = useState(false);
-  const [sandboxScrambleActive, setSandboxScrambleActive] = useState(false);
-  const [sandboxAnimationText, setSandboxAnimationText] = useState("gurfntneqnuny00@tznvy.pbz");
 
   // ROT13 cipher utility
   const rot13 = (str) => {
@@ -175,7 +114,7 @@ export default function Home() {
     }, 30);
   };
 
-  // Fixed: Concurrent Matrix Scramble for BOTH Email & Phone Numbers
+  // Fixed: Concurrent Scramble for BOTH Email & Phone Numbers
   const triggerRevealAnimation = () => {
     if (scrambleActive || revealedContacts) return;
     setScrambleActive(true);
@@ -220,7 +159,7 @@ export default function Home() {
     }, 40);
   };
 
-  // Interactive CLI Terminal Emulator State
+  // CLI State
   const [terminalHistory, setTerminalHistory] = useState([
     { kind: "system", text: "SAGAR DAHAL SECURITY OPERATIONS DIAGNOSTIC CONSOLE V1.2.0" },
     { kind: "system", text: "Ready for input. Type 'help' to list diagnostics commands." },
@@ -239,7 +178,6 @@ export default function Home() {
     }
   }, [terminalHistory]);
 
-  // Sync clock ticker
   useEffect(() => {
     const updateClock = () => {
       const now = new Date();
@@ -259,7 +197,6 @@ export default function Home() {
     setTerminalHistory((prev) => [...prev, line]);
   };
 
-  // CLI Command processor
   const processCLICommand = (rawCommand) => {
     const cleanCmd = rawCommand.trim();
     if (!cleanCmd) return;
@@ -283,6 +220,8 @@ export default function Home() {
         addToHistory({ kind: "output", text: "  decrypt <c>  Decode standard ROT13 cipher string" });
         addToHistory({ kind: "output", text: "  links        Professional network connections" });
         addToHistory({ kind: "output", text: "  resume       Download & view professional resume" });
+        addToHistory({ kind: "output", text: "  writeups     Navigate to full Writeups Hub (/writeups)" });
+        addToHistory({ kind: "output", text: "  admin        Navigate to Admin Control Panel (/sagar)" });
         addToHistory({ kind: "output", text: "  clear        Flush terminal history buffer" });
         break;
 
@@ -382,6 +321,15 @@ export default function Home() {
         addToHistory({ kind: "link", text: "Resume:   ", label: "SagarDahalResume.pdf", url: researcherInfo.resume });
         break;
 
+      case "writeups":
+        window.location.href = "/writeups";
+        break;
+
+      case "admin":
+      case "sagar":
+        window.location.href = "/sagar";
+        break;
+
       case "clear":
         setTerminalHistory([]);
         break;
@@ -411,23 +359,35 @@ export default function Home() {
 
   return (
     <main className="main-wrapper">
-      {/* Subtle Ambient Layer Mesh Backgrounds */}
+      {/* Ambient Mesh Backgrounds */}
       <div className="bg-ambient-mesh" />
       <div className="bg-dot-grid" />
 
       {/* Executive Minimalist Glassmorphic Header */}
       <header className="main-header">
         <div className="brand-section">
-          <h1 className="brand-title">SAGAR DAHAL</h1>
-          <span className="brand-subtitle">Information Security Consultant</span>
+          <Link href="/" className="brand-title">
+            SAGAR DAHAL
+          </Link>
+          <span className="brand-badge">OFFENSIVE SECURITY</span>
         </div>
+
+        <nav className="header-nav">
+          <Link href="/" className="nav-link active">
+            Overview
+          </Link>
+          <Link href="/writeups" className="nav-link">
+            Security Advisories
+          </Link>
+          <Link href="/sagar" className="nav-link admin-link">
+            Control Panel (/sagar)
+          </Link>
+        </nav>
+
         <div className="system-status">
           <div className="status-node">
             <span className="status-indicator blink" />
             <span>DECK: ACTIVE</span>
-          </div>
-          <div className="status-node">
-            <span>SECURE CHANNEL: E2EE</span>
           </div>
           <div className="status-node clock-ticker">
             <span>{clock}</span>
@@ -445,7 +405,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Capsule Segmented Tab Navigation */}
+      {/* Segmented Capsule Tab Navigator */}
       <nav className="tab-navigation">
         <button
           onClick={() => setActiveTab("dashboard")}
@@ -488,7 +448,7 @@ export default function Home() {
         </button>
       </nav>
 
-      {/* Interactive Quick Diagnostics Shortcuts */}
+      {/* Interactive Quick Shortcuts */}
       <section className={`cyber-panel quick-panel ${guideMode ? "" : "hidden-tab"}`}>
         <span className="quick-panel-title">Quick Shortcuts:</span>
         <div className="quick-panel-buttons">
@@ -504,7 +464,7 @@ export default function Home() {
       {/* Tab Area 1: Security Dashboard */}
       <div id="tab-dashboard" className={`tab-content-section ${activeTab === "dashboard" ? "" : "hidden-tab"}`}>
         <div className="dashboard-grid">
-          {/* Column 1: Bios & Clearances */}
+          {/* Column 1: Profile & Clearances */}
           <div className="profile-card">
             <div className="cyber-panel">
               <h2 className="panel-title">Consultant Profile</h2>
@@ -523,6 +483,8 @@ export default function Home() {
                 <span className="bio-label">Location</span>
                 <span className="bio-value">{researcherInfo.location}</span>
               </div>
+              
+              {/* Fixed: Explicit data-contact attribute for clean DOM binding */}
               <div className="bio-detail-row">
                 <span className="bio-label">Secure Contact</span>
                 <span data-contact="email" className={`bio-value secure-val ${revealedContacts ? "revealed" : "encrypted"}`}>
@@ -555,7 +517,7 @@ export default function Home() {
 
             {/* Certifications badges */}
             <div className="cyber-panel blue">
-              <h2 className="panel-title">Verified Certifications</h2>
+              <h2 className="panel-title">Verified Clearances</h2>
               <div className="cert-grid">
                 {certs.map((c, i) => (
                   <div key={i} className="cert-card">
@@ -567,7 +529,7 @@ export default function Home() {
             </div>
           </div>
 
-          {/* Column 2: Technical Capabilities (Skills) */}
+          {/* Column 2: Technical Expertise Assessments */}
           <div className="cyber-panel">
             <h2 className="panel-title">Technical Expertise Assessments</h2>
             
@@ -621,8 +583,14 @@ export default function Home() {
         </div>
       </div>
 
-      {/* Tab Area 2: Security Advisories (Writeups) */}
+      {/* Tab Area 2: Security Advisories */}
       <div id="tab-logs" className={`tab-content-section ${activeTab === "logs" ? "" : "hidden-tab"}`}>
+        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "16px", flexWrap: "wrap", gap: "12px" }}>
+          <h2 style={{ fontSize: "1.2rem", fontWeight: "700" }}>Recent Advisory Bulletins</h2>
+          <Link href="/writeups" className="advisory-link primary-read">
+            Explore Dedicated Writeups Hub (/writeups) →
+          </Link>
+        </div>
         <div className="writeups-wrapper">
           {writeups.map((w, idx) => (
             <article key={idx} className={`cyber-panel ${w.severity === "High" ? "advisory-card red" : "advisory-card"}`}>
@@ -630,16 +598,25 @@ export default function Home() {
                 <span className="advisory-id">{w.id} [SEVERITY: {w.severity.toUpperCase()}]</span>
                 <span className="advisory-date">PUBLISHED: {w.date}</span>
               </div>
-              <h2 className="advisory-title">{w.title}</h2>
+              <h2 className="advisory-title">
+                <Link href={`/writeups/${w.slug}`} className="advisory-title-link">
+                  {w.title}
+                </Link>
+              </h2>
               <div className="advisory-content">
                 {w.content.map((bullet, i) => (
                   <p key={i} className="advisory-bullet">{bullet}</p>
                 ))}
               </div>
               <div className="advisory-footer">
-                <a href={w.sourceUrl} target="_blank" rel="noopener noreferrer" className="advisory-link">
-                  View Intelligence Bulletin (Full Writeup)
-                </a>
+                <Link href={`/writeups/${w.slug}`} className="advisory-link primary-read">
+                  Read Full Article Details →
+                </Link>
+                {w.sourceUrl && (
+                  <a href={w.sourceUrl} target="_blank" rel="noopener noreferrer" className="advisory-link">
+                    Medium Publication ↗
+                  </a>
+                )}
               </div>
             </article>
           ))}
@@ -702,7 +679,7 @@ export default function Home() {
               className="terminal-shell-input"
               autoComplete="off"
               spellCheck="false"
-              placeholder="type console commands (e.g. 'help', 'whoami', 'scan')..."
+              placeholder="type console commands (e.g. 'help', 'whoami', 'writeups')..."
             />
           </form>
         </div>
@@ -780,14 +757,15 @@ export default function Home() {
         </div>
       </div>
 
-      {/* Executive Footer */}
+      {/* Footer */}
       <footer className="cyber-footer">
         <p>© 2026 SAGAR DAHAL. INFORMATION SECURITY AUDITING CONSOLE. ALL RIGHTS RESERVED.</p>
         <div style={{ marginTop: "12px", display: "flex", justifyContent: "center", gap: "20px", flexWrap: "wrap" }}>
           <a href={socials.github} target="_blank" rel="noopener noreferrer">[GITHUB]</a>
           <a href={socials.linkedin} target="_blank" rel="noopener noreferrer">[LINKEDIN]</a>
           <a href={socials.medium} target="_blank" rel="noopener noreferrer">[MEDIUM]</a>
-          <a href={researcherInfo.resume} target="_blank" rel="noopener noreferrer">[RESUME]</a>
+          <a href={`/${researcherInfo.resume}`} target="_blank" rel="noopener noreferrer">[RESUME]</a>
+          <Link href="/sagar">[CONTROL PANEL]</Link>
         </div>
       </footer>
     </main>

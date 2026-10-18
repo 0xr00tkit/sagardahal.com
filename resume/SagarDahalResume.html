@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Sagar Dahal – Resume</title>
+<style>
+  @page { size: A4; margin: 10mm 13mm; }
+  :root { --navy: #0b3a6b; --text: #1a1a1a; --muted: #555; }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: "Helvetica Neue", Helvetica, Arial, "Liberation Sans", sans-serif;
+    font-size: 9.4pt;
+    line-height: 1.34;
+    color: var(--text);
+    background: #fff;
+  }
+  a { color: inherit; text-decoration: none; }
+  header { text-align: center; margin-bottom: 8px; }
+  h1 { margin: 0; font-size: 24pt; letter-spacing: 1.5px; color: var(--navy); }
+  .title { font-size: 12pt; font-weight: 700; color: #333; margin: 2px 0 5px; }
+  .contact { font-size: 9pt; color: #222; }
+  .contact span + span::before { content: " | "; color: var(--muted); }
+  h2 {
+    font-size: 10.5pt;
+    letter-spacing: 0.8px;
+    color: var(--navy);
+    text-transform: uppercase;
+    margin: 9px 0 4px;
+    padding-bottom: 3px;
+    border-bottom: 1.6px solid var(--navy);
+  }
+  p { margin: 0; }
+  table.skills { width: 100%; border-collapse: collapse; }
+  table.skills td { padding: 2px 0; vertical-align: top; }
+  table.skills td:first-child { width: 22%; font-weight: 700; color: #444; }
+  .role { display: flex; justify-content: space-between; align-items: baseline; margin-top: 6px; }
+  .role strong { font-size: 10pt; }
+  .dates { font-weight: 700; font-size: 9pt; white-space: nowrap; }
+  .org { font-style: italic; color: var(--muted); }
+  ul { margin: 3px 0 0; padding-left: 16px; }
+  li { margin: 1.5px 0; }
+  .certs li { margin: 1px 0; }
+  .edu { display: flex; justify-content: space-between; margin: 2px 0; }
+  .issuer { color: var(--muted); }
+</style>
+</head>
+<body>
+<header>
+  <h1>SAGAR DAHAL</h1>
+  <div class="title">Offensive Security Consultant | Penetration Tester</div>
+  <div class="contact">
+    <span><a href="mailto:thesagardahal00@gmail.com">thesagardahal00@gmail.com</a></span><span>Bongaigaon, Assam, India</span><span><a href="https://sagardahal.com">sagardahal.com</a></span>
+  </div>
+  <div class="contact">
+    <span><a href="https://in.linkedin.com/in/sagar-dahal-b16021203">linkedin.com/in/sagar-dahal-b16021203</a></span><span><a href="https://github.com/0xr00tkit">github.com/0xr00tkit</a></span><span><a href="https://thesagardahal.medium.com/">thesagardahal.medium.com</a></span>
+  </div>
+</header>
+
+<h2>Professional Summary</h2>
+<p>
+  <strong>Offensive security consultant</strong> with nearly <strong>3 years</strong> of client-facing experience in
+  <strong>penetration testing, red teaming and Active Directory assessments</strong> across web, API, mobile and
+  network targets. Pairs manual exploitation with custom tooling in <strong>Python</strong> and <strong>C/C++</strong>, and
+  turns technical findings into prioritised, business-focused remediation. Responsibly disclosed a critical API flaw
+  exposing user data at <strong>Moneycontrol</strong>.
+</p>
+
+<h2>Technical Skills</h2>
+<table class="skills">
+  <tr><td>Pentesting</td><td>Web Application, API, Mobile, Cloud, Infrastructure, Network Security, Source Code Review</td></tr>
+  <tr><td>Tools</td><td><strong>Burp Suite</strong>, <strong>Nmap</strong>, <strong>Metasploit</strong>, <strong>BloodHound</strong>, <strong>Impacket</strong>, Frida, MobSF</td></tr>
+  <tr><td>Frameworks</td><td>OWASP Top 10, OWASP API Security Top 10, OWASP MASVS, CVSS, MITRE ATT&amp;CK</td></tr>
+  <tr><td>Coding</td><td><strong>Python</strong>, Rust, PHP, C/C++, C#</td></tr>
+  <tr><td>Systems</td><td><strong>Linux</strong>, <strong>Windows</strong>, <strong>Active Directory</strong>, MySQL</td></tr>
+  <tr><td>Methods</td><td>Red Team Engagements, OSINT, Threat Modelling, Risk Assessment, Technical Reporting</td></tr>
+  <tr><td>Languages</td><td>English, Hindi</td></tr>
+</table>
+
+<h2>Work Experience</h2>
+<div class="role"><strong>Independent Security Researcher</strong><span class="dates">06/2025 – Present</span></div>
+<div class="org">Self-directed</div>
+<ul>
+  <li>Built <strong>Coudit</strong>, an open-source Python CLI that scans local code and Git repositories for hardcoded secrets
+    (AWS, GCP and generic API keys), using <strong>entropy-based filtering</strong> to cut false positives, parallel scanning and JSON severity reports.</li>
+  <li>Published research on applying <strong>Shannon entropy</strong> in code audits to detect weak JWTs, session IDs, reset tokens and API keys (Sep 2025).</li>
+  <li>Designed and deployed <a href="https://sagardahal.com"><strong>sagardahal.com</strong></a>, a security portfolio with writeups and advisories.</li>
+</ul>
+
+<div class="role"><strong>Associate Security Consultant</strong><span class="dates">08/2022 – 05/2025</span></div>
+<div class="org">Netsentries Technologies</div>
+<ul>
+  <li>Delivered end-to-end <strong>penetration tests and security audits</strong> of web applications, APIs, mobile apps and internal networks for clients across multiple industries.</li>
+  <li>Ran <strong>red team engagements</strong> and <strong>Active Directory assessments</strong>, emulating real attacker tradecraft to expose privilege-escalation paths and critical security gaps.</li>
+  <li>Identified and exploited high-impact vulnerabilities including <strong>IDOR, SSRF, SQLi, XSS, CSRF</strong> and <strong>broken access control</strong>, rating each with CVSS.</li>
+  <li>Wrote technical and executive reports with <strong>risk ratings and actionable remediation</strong>, and walked client teams through fixes and retests.</li>
+  <li>Used OSINT and custom Python scripts to widen attack-surface discovery and speed up repetitive testing.</li>
+</ul>
+
+<h2>Key Achievements</h2>
+<ul>
+  <li><strong>Responsible disclosure to Moneycontrol (2023):</strong> found and reported a critical <strong>API logic flaw</strong> exposing
+    personal user details; advised the engineering lead on mitigation, leading to immediate remediation.</li>
+</ul>
+
+<h2>Certifications</h2>
+<ul class="certs">
+  <li><strong>CRTP</strong> – Certified Red Team Professional <span class="issuer">(Altered Security)</span></li>
+  <li><strong>CNSP</strong> – Certified Network Security Practitioner <span class="issuer">(The SecOps Group)</span></li>
+  <li><strong>CAP</strong> – Certified AppSec Practitioner <span class="issuer">(The SecOps Group)</span></li>
+  <li><strong>MCRTA</strong> – Multi-Cloud Red Team Analyst <span class="issuer">(CyberWarFare Labs)</span></li>
+  <li><strong>CRTA</strong> – Certified Red Team Analyst <span class="issuer">(CyberWarFare Labs)</span></li>
+</ul>
+
+<h2>Education</h2>
+<div class="edu"><span><strong>Class XII</strong> – <span class="org">Little Flower School</span></span><span class="dates">2017 – 2019</span></div>
+<div class="edu"><span><strong>Class X</strong> – <span class="org">Bongaigaon Higher Secondary School, Bongaigaon</span></span><span class="dates">2017</span></div>
+
+</body>
+</html>
